@@ -24,7 +24,7 @@ public class DetailsDAOImpl implements DetailsDAO {
 	public void save(SpringMvcRegistrationDetails details) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.save(details);
+		session.saveOrUpdate(details);
 		transaction.commit();
 		session.close();
 	}

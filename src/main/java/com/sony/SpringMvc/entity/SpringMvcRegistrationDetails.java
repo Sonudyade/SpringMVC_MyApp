@@ -112,6 +112,18 @@ public class SpringMvcRegistrationDetails {
 		Others = others;
 	}
 
+
+
+	public int getoTP() {
+		return oTP;
+	}
+
+	public void setoTP(int oTP) {
+		this.oTP = oTP;
+	}
+
+
+
 	@Column(name="firstName")
 	private String firstName;
 	
@@ -144,7 +156,13 @@ public class SpringMvcRegistrationDetails {
 	
 	@Column(name="Others")
 	private String Others;
+	
+	@Column(name="otp")
+	private int oTP;
+	
+	
 
+	
 	@Override
 	public String toString() {
 		return "SpringMvcRegistrationDetails [id=" + id + ", firstName=" + firstName + ", middelName=" + middelName

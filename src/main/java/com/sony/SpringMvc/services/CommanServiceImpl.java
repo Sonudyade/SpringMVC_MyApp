@@ -1,5 +1,7 @@
 package com.sony.SpringMvc.services;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +9,7 @@ import com.sony.SpringMvc.dao.DetailsDAO;
 import com.sony.SpringMvc.dto.Details;
 import com.sony.SpringMvc.dto.LoginDTO;
 import com.sony.SpringMvc.entity.SpringMvcRegistrationDetails;
+import com.sony.SpringMvc.util.MyAppUtils;
 
 import antlr.StringUtils;
 
@@ -16,6 +19,9 @@ public class CommanServiceImpl implements CommanService{
 	
 	@Autowired
 	private DetailsDAO dao;
+	
+	@Autowired
+	private MyAppUtils util;
 
 	public String validateAndSave(Details details) {
 		
@@ -54,7 +60,7 @@ public class CommanServiceImpl implements CommanService{
 				
 				if(dto.getEmail().equals(registrationDetails.getEmail())
 						&& dto.getPassword().equals(registrationDetails.getPassword())) {
-					return "Login Successfull";
+					return  dto.getEmail();
 					
 				}else {
 					return "Invalid email and password";
@@ -70,7 +76,39 @@ public class CommanServiceImpl implements CommanService{
 		}
 	    
 	}
+
+	public SpringMvcRegistrationDetails getMyProfile(String email) {
+		SpringMvcRegistrationDetails registrationDetails  = null;
+		if(email != null && !email.isEmpty()) {
+		 registrationDetails =dao.getByEmail(email);
+		
+		
 	}
+		return registrationDetails;
+	}
+
+	public String validateAndSentOtp(String email) {
+		if(email != null && !email.isEmpty()) {
+			SpringMvcRegistrationDetails registrationDetails =dao.getByEmail(email);
+			if(registrationDetails != null) {
+				int otp = util.generateOtp();
+				//util.sendMail(email, otp);
+				registrationDetails.setoTP(otp);
+				
+				dao.save(registrationDetails);
+				
+				return "OTP sent";
+			}
+			else {
+				return  "email not registerd";
+			}
+				
+		}else {
+			return "invalid emailid";
+		}
+		
+	}
+}
 	
 
 
