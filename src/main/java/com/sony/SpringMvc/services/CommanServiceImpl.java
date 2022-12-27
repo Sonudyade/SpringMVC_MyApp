@@ -2,6 +2,7 @@ package com.sony.SpringMvc.services;
 
 import java.util.Random;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -93,7 +94,7 @@ public class CommanServiceImpl implements CommanService{
 			if(registrationDetails != null) {
 				int otp = util.generateOtp();
 				//util.sendMail(email, otp);
-				registrationDetails.setoTP(otp);
+				registrationDetails.setOTP(otp);
 				
 				dao.save(registrationDetails);
 				
